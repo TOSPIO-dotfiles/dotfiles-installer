@@ -1,0 +1,7 @@
+#!/usr/bin/env python3
+
+import sys
+
+def check_python_version():
+    pyver = sys.version_info
+    major, minor = pyver.major, pyver.minor
