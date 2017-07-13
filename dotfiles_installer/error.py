@@ -31,7 +31,7 @@ class Panic(Error):
 
 
 class PythonVersionError(Panic):
-    msg = "Python version must be >= 3.5"
+    msg = "Unmet Python version: {}"
 
 
 class PythonDepUnmetError(Panic):

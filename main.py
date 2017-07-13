@@ -42,7 +42,7 @@ def _simple_python_dep_check(dep, least_version=None, dep_name=None):
 def check_python_version():
     python_version = sys.version_info
     if python_version < (3, 5):
-        error.PythonVersionError.emerge()
+        error.PythonVersionError.emerge(">= 3.5")
 
 
 def check_python_deps():
