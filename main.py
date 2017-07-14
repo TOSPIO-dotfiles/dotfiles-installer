@@ -1,5 +1,5 @@
 import sys
-import importlib
+import pkg_resources
 from dotfiles_installer import error
 from dotfiles_installer.util import version_str_to_tuple
 
@@ -8,19 +8,19 @@ def _python_dep_check(dep, pred=None, dep_spec=None):
     if dep_spec is None:
         dep_spec = dep  # dep spec name
     try:
-        mod = importlib.import_module(dep)
+        pkg_version = pkg_resources.get_distribution(dep).version
         # If pred returns non-boolean values we're fucked up.
         # So we do strict boolean check.
-        if pred and pred(mod) is False:
+        if pred and pred(pkg_version) is False:
             error.PythonDepUnmetError.emerge(dep_spec)
-    except ImportError:
+    except pkg_resources.DistributionNotFound:
         error.PythonDepUnmetError.emerge(dep_spec)
 
 
 def _default_python_dep_check_pred(least_version):
-    def _pred(mod):
+    def _pred(pkg_version):
         return (
-            version_str_to_tuple(mod.__version__) >=
+            version_str_to_tuple(pkg_version) >=
             version_str_to_tuple(least_version)
         )
 
@@ -47,6 +47,7 @@ def check_python_version():
 
 def check_python_deps():
     _simple_python_dep_check('pystache', least_version='0.5')
+    _simple_python_dep_check('toml', least_version='0.7.0')
 
 
 if __name__ == '__main__':
