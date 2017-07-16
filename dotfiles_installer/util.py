@@ -13,8 +13,9 @@ def bug(msg, *args, **kwargs):
 
 
 def pbug(pkg, msg, *args, **kwargs):
-    pe("! Bug in package !")
+    pe(f"! Package {pkg} is broken !")
     pe(msg.format(*args, **kwargs))
+    pe("! Either you have a network issue or there is a bug in the package.")
     pe("! Please report a bug to the author of {}.".format(pkg))
 
 

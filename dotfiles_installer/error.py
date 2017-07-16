@@ -1,5 +1,6 @@
 from .util import pe
 
+
 # Not sure if this would be useful in the future
 _errors = {}
 
@@ -36,3 +37,7 @@ class PythonVersionError(Panic):
 
 class PythonDepUnmetError(Panic):
     msg = "Missing Python dep: {}"  # dep, version
+
+
+class AttemptToRunMultipleInstancesError(Panic):
+    msg = "An instance of dotfiles-installer is already running"

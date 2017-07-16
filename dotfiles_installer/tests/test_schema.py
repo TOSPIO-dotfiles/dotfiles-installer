@@ -2,11 +2,32 @@ from . import TestCase
 from dotfiles_installer.schema import Schema, SchemaV1
 
 
-class SchemaV1TestCase(TestCase):
-    def test_nothing(self):
-        self.assertEqual(1, 1)
+class SchemaTestCase(TestCase):
+    _schema_file = None
+
+    def setUp(self):
+        self._schema = Schema.loads(
+            self.load_fixture_file_s(self._schema_file)
+        )
+
+    @property
+    def schema(self):
+        return self._schema
+
+
+class SchemaV1TestCase(SchemaTestCase):
+    _schema_file = 'sample_schema_v1.yaml'
 
     def test_schema_version(self):
-        schema_s = self.load_fixture_file_s('sample_schema_v1.toml')
-        schema = Schema.loads(schema_s)
-        self.assertIsInstance(schema, SchemaV1)
+        self.assertIsInstance(self._schema, SchemaV1)
+
+    def test_deps(self):
+        self.assertListEqual([
+            "github:tospio-dotfiles/y-usuzumi-zsh",
+            "github:tospio-dotfiles/y-usuzumi-spacemacs"
+        ], self._schema.deps)
+
+    def test_optdeps(self):
+        self.assertListEqual([
+            "github:tospio-dotfiles/y-usuzumi-proxy"
+        ], self._schema.optdeps)

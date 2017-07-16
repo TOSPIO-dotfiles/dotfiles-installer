@@ -1,0 +1,8 @@
+SV: 1
+
+DEPS:
+  - "github:tospio-dotfiles/y-usuzumi-zsh"
+  - "github:tospio-dotfiles/y-usuzumi-spacemacs"
+
+OPTDEPS:
+  - "github:tospio-dotfiles/y-usuzumi-proxy"
