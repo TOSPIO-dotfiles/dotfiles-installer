@@ -2,6 +2,7 @@ import sys
 import pkg_resources
 from dotfiles_installer import error
 from dotfiles_installer.util import version_str_to_tuple
+from dotfiles_installer.lock import global_lock
 
 
 def _python_dep_check(dep, pred=None, dep_spec=None):
@@ -47,7 +48,8 @@ def check_python_version():
 
 def check_python_deps():
     _simple_python_dep_check('pystache', least_version='0.5')
-    _simple_python_dep_check('toml', least_version='0.7.0')
+    _simple_python_dep_check('PyYAML', least_version='3.12')
+    _simple_python_dep_check('fasteners', least_version='0.14')
 
 
 if __name__ == '__main__':
