@@ -2,7 +2,6 @@ import sys
 import pkg_resources
 from dotfiles_installer import error
 from dotfiles_installer.util import version_str_to_tuple
-from dotfiles_installer.lock import global_lock
 
 
 def _python_dep_check(dep, pred=None, dep_spec=None):

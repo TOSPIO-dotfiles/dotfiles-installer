@@ -1,4 +1,4 @@
-SV: 1
+SV: 2
 
 DEPS:
   - "github:tospio-dotfiles/y-usuzumi-zsh"

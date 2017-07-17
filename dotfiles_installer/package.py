@@ -14,8 +14,9 @@ class Package:
         schema_file = os.path.join(root_dir, SCHEMA_FILE)
         self._schema = Schema.load(schema_file)
 
-    def install(self):
-        return self._schema.do_install(self._root_dir)
+    @property
+    def schema(self):
+        return self._schema
 
     @classmethod
     def validate(cls, root_dir):

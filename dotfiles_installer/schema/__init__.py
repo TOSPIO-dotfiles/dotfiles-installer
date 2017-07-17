@@ -1,4 +1,3 @@
-import os
 import yaml
 from . import consts
 from ..util import bug
@@ -29,6 +28,8 @@ register = _SchemaManager.register
 
 
 class Schema:
+    features = set()
+
     def __init__(self, schema_dict):
         self._schema = schema_dict
 
@@ -47,6 +48,14 @@ class Schema:
             except AttributeError:
                 bug("Const {} is not defined".format(const_name))
         return const
+
+    @classmethod
+    def has_feature(cls, feature):
+        return feature in cls.features
+
+    @classmethod
+    def has_features(cls, features):
+        return set(features).issubset(cls.features)
 
     @classmethod
     def load(cls, f):
@@ -69,9 +78,21 @@ class Schema:
 
 @register(1)
 class SchemaV1(Schema):
+    # TODO: Abstract schema features from schema classes
+    features = Schema.features | {
+        consts.FEATURE_DEPS
+    }
+
     @property
     def deps(self):
         return self._schema.get("DEPS", {})
+
+
+@register(2)
+class SchemaV2(SchemaV1):
+    features = SchemaV1.features + {
+        consts.FEATURE_OPTDEPS
+    }
 
     @property
     def optdeps(self):
